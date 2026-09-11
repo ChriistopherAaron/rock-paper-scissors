@@ -32,3 +32,68 @@
 // Compare humanScore and computerScore
 // Log the final winner of the entire game
 
+// CODE STARTS BELOW //
+
+function getComputerChoice() {
+    const randomNumber = Math.random();
+
+    if (randomNumber < 0.33) {
+        return "rock";
+    } else if (randomNumber < 0.66) {
+        return "paper";
+    } else {
+        return "scissors";
+    }
+}
+console.log(getComputerChoice());
+
+// Get Human's Chose //
+function getHumanChoice() {
+    let userInput = prompt("Please choose rock, paper, or scissors:");
+    return userInput.toLowerCase();
+}
+function playGame() {
+  let humanScore = 0;
+  let computerScore = 0;
+
+  function playRound(humanChoice, computerChoice) {
+    humanChoice = humanChoice.toLowerCase();
+
+    if (humanChoice === computerChoice) {
+      console.log(`It's a tie! Both chose ${humanChoice}.`);
+    } else if (
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "paper" && computerChoice === "rock") ||
+      (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+      humanScore++;
+      console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+    } else {
+      computerScore++;
+      console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+    }
+
+    console.log(`Current Score -> You: ${humanScore} | Computer: ${computerScore}`);
+  }
+
+  // Loop to play 5 rounds automatically
+  for (let i = 1; i <= 5; i++) {
+    console.log(`--- Round ${i} ---`);
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+  }
+
+  // Announce the final winner
+  console.log("=== FINAL RESULTS ===");
+  if (humanScore > computerScore) {
+    console.log(`You won the game! Final Score: ${humanScore} to ${computerScore}`);
+  } else if (computerScore > humanScore) {
+    console.log(`Computer won the game! Final Score: ${computerScore} to ${humanScore}`);
+  } else {
+    console.log(`The game ended in a tie! ${humanScore} to ${computerScore}`);
+  }
+}
+
+// Call the main game function
+playGame();
